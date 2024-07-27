@@ -44,10 +44,12 @@ if (NOT RAPIDJSONTEST)
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty
     )
     file(REMOVE ${RJ_TAR_FILE})
-    execute_process(
-        COMMAND patch -p1 -i ${RJ_PATCH_FILE}
-        WORKING_DIRECTORY ${RJ_DIR}   
-    )
+    if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+        execute_process(
+            COMMAND patch -p1 -i ${RJ_PATCH_FILE}
+            WORKING_DIRECTORY ${RJ_DIR}   
+        )
+    endif()
 endif(NOT RAPIDJSONTEST)
 
 find_file(RAPIDJSON NAMES rapidjson rapidjson-1.1.0 PATHS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty CMAKE_FIND_ROOT_PATH_BOTH)
